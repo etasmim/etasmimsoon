@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Tasmim - قريباً</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(-45deg, #FFD700, #4169E1, #1E90FF, #FFA500, #FFFF00);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 6s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.7;
+            }
+
+            90% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .main-content {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideInUp 1.2s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            animation: shimmer 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(80px) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .logo-section {
+            margin-bottom: 50px;
+            animation: logoGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            from {
+                filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+            }
+
+            to {
+                filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6));
+            }
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #4169E1, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShine 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        @keyframes textShine {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .tagline {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInDelay 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes fadeInDelay {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-card {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInDelay 1s ease-out 1s forwards;
+        }
+
+        .status-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            animation: slideProgress 2s infinite;
+        }
+
+        @keyframes slideProgress {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .status-title {
+            color: white;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid #FFD700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .status-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #4169E1);
+            border-radius: 10px;
+            width: 0%;
+            animation: progressAnimation 3s ease-out forwards;
+        }
+
+        @keyframes progressAnimation {
+            to {
+                width: 75%;
+            }
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: fadeInDelay 1s ease-out 1.5s forwards;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.1), rgba(65, 105, 225, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #FFD700;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+        }
+
+        .feature-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .contact-section {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 40px;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInDelay 1s ease-out 2s forwards;
+        }
+
+        .contact-card {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .contact-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-info {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 15px 25px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .contact-info:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .social-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeInDelay 1s ease-out 2.5s forwards;
+        }
+
+        .social-link {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+
+        .social-link:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+
+        .social-link:hover {
+            transform: translateY(-10px) scale(1.2) rotate(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Social Media Colors */
+        .facebook {
+            background: linear-gradient(135deg, #3b5998, #4267B2);
+        }
+
+        .facebook::before {
+            background: linear-gradient(135deg, #4267B2, #5578C7);
+        }
+
+        .twitter {
+            background: linear-gradient(135deg, #000000, #1DA1F2);
+        }
+
+        .twitter::before {
+            background: linear-gradient(135deg, #1DA1F2, #4AB3F4);
+        }
+
+        .instagram {
+            background: linear-gradient(135deg, #E4405F, #C13584, #833AB4);
+        }
+
+        .instagram::before {
+            background: linear-gradient(135deg, #F56040, #E4405F, #C13584);
+        }
+
+        .linkedin {
+            background: linear-gradient(135deg, #0077B5, #00A0DC);
+        }
+
+        .linkedin::before {
+            background: linear-gradient(135deg, #00A0DC, #40B5E8);
+        }
+
+        .youtube {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+        }
+
+        .youtube::before {
+            background: linear-gradient(135deg, #FF3333, #FF0000);
+        }
+
+        .tiktok {
+            background: linear-gradient(135deg, #000000, #ff0050, #00f2ea);
+        }
+
+        .tiktok::before {
+            background: linear-gradient(135deg, #ff0050, #00f2ea, #000000);
+        }
+
+        .telegram {
+            background: linear-gradient(135deg, #0088cc, #00aced);
+        }
+
+        .telegram::before {
+            background: linear-gradient(135deg, #00aced, #40c4ff);
+        }
+
+        .whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+        }
+
+        .whatsapp::before {
+            background: linear-gradient(135deg, #40E884, #25D366);
+        }
+
+        .snapchat {
+            background: linear-gradient(135deg, #FFFC00, #FFF700);
+            color: #333 !important;
+        }
+
+        .snapchat::before {
+            background: linear-gradient(135deg, #FFF700, #FFFF33);
+        }
+
+        .pinterest {
+            background: linear-gradient(135deg, #BD081C, #E60023);
+        }
+
+        .pinterest::before {
+            background: linear-gradient(135deg, #E60023, #FF3347);
+        }
+
+        .countdown-section {
+            margin: 50px 0;
+            opacity: 0;
+            animation: fadeInDelay 1s ease-out 3s forwards;
+        }
+
+        .countdown-title {
+            color: white;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .countdown-timer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            direction: ltr;
+        }
+
+        .time-unit {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            text-align: center;
+        }
+
+        .time-number {
+            color: #FFD700;
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .time-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 40px 20px;
+            }
+
+            .logo {
+                font-size: 3rem;
+            }
+
+            .status-title {
+                font-size: 1.8rem;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .contact-section {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .social-grid {
+                gap: 15px;
+            }
+
+            .social-link {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .countdown-timer {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .time-number {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .social-grid {
+                gap: 10px;
+            }
+
+            .social-link {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="logo-section">
+                <h1 class="logo">E-Tasmim</h1>
+                <p class="tagline">ابتكار • إبداع • تميز</p>
+            </div>
+
+            <div class="status-card">
+                <h2 class="status-title">
+                    <div class="loading-spinner"></div>
+                    موقعنا في طور التطوير
+                </h2>
+                <p class="status-description">
+                    نحن نعمل بجد لإنشاء تجربة تصميم استثنائية تتجاوز توقعاتك.
+                    موقعنا الجديد سيقدم حلولاً مبتكرة وأدوات متطورة لجميع احتياجاتك التصميمية.
+                </p>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-paint-brush"></i></div>
+                    <h3 class="feature-title">تصميم إبداعي</h3>
+                    <p class="feature-description">حلول تصميم مبتكرة تعكس هويتك الفريدة</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+                    <h3 class="feature-title">أداء فائق</h3>
+                    <p class="feature-description">مواقع سريعة ومحسنة لمحركات البحث</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-users"></i></div>
+                    <h3 class="feature-title">دعم 24/7</h3>
+                    <p class="feature-description">فريق دعم متخصص متاح في خدمتك دائماً</p>
+                </div>
+            </div>
+
+            <div class="countdown-section">
+                <h3 class="countdown-title">الإطلاق خلال</h3>
+                <div class="countdown-timer">
+                    <div class="time-unit">
+                        <span class="time-number" id="days">30</span>
+                        <span class="time-label">يوم</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-number" id="hours">12</span>
+                        <span class="time-label">ساعة</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-number" id="minutes">45</span>
+                        <span class="time-label">دقيقة</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-number" id="seconds">30</span>
+                        <span class="time-label">ثانية</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-section">
+                <div class="contact-card">
+                    <h3 class="contact-title">
+                        <i class="fas fa-envelope"></i>
+                        تواصل معنا
+                    </h3>
+                    <div class="contact-info">contact@etasmim.com</div>
+                </div>
+            </div>
+
+            <div class="social-grid">
+                <a href="https://www.facebook.com/etasmim" target="_blank" class="social-link facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://x.com/etasmim1" target="_blank" class="social-link twitter">
+                    <i class="fab fa-x-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/etasmim1" target="_blank" class="social-link instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/etasmim" target="_blank" class="social-link linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://www.youtube.com/@Etasmim" target="_blank" class="social-link youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.tiktok.com/@e_tasmim" target="_blank" class="social-link tiktok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://t.me/etasmim" target="_blank" class="social-link telegram">
+                    <i class="fab fa-telegram-plane"></i>
+                </a>
+                <a href="https://wa.me/212671577909" target="_blank" class="social-link whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.snapchat.com/@etasmim1" target="_blank" class="social-link snapchat">
+                    <i class="fab fa-snapchat-ghost"></i>
+                </a>
+                <a href="https://www.pinterest.com/etasmim1/" target="_blank" class="social-link pinterest">
+                    <i class="fab fa-pinterest-p"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Countdown timer
+        function updateCountdown() {
+            const targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 30); // 30 days from now
+
+            function tick() {
+                const now = new Date();
+                const diff = targetDate - now;
+
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+                }
+            }
+
+            tick();
+            setInterval(tick, 1000);
+        }
+
+        // Add hover effects to cards
+        function addInteractivity() {
+            const cards = document.querySelectorAll('.feature-card, .contact-card');
+
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function () {
+                    this.style.transform = 'translateY(-10px) scale(1.05)';
+                });
+
+                card.addEventListener('mouseleave', function () {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Social links animation on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.transform = 'translateY(0) scale(1)';
+                            entry.target.style.opacity = '1';
+                        }, index * 100);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.social-link').forEach(link => {
+                link.style.transform = 'translateY(30px) scale(0.8)';
+                link.style.opacity = '0';
+                link.style.transition = 'all 0.6s ease';
+                observer.observe(link);
+            });
+        }
+
+        // Parallax effect for background
+        function addParallaxEffect() {
+            let ticking = false;
+
+            function updateParallax() {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                document.body.style.backgroundPosition = `50% ${rate}px`;
+                ticking = false;
+            }
+
+            function requestParallax() {
+                if (!ticking) {
+                    requestAnimationFrame(updateParallax);
+                    ticking = true;
+                }
+            }
+
+            window.addEventListener('scroll', requestParallax);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function () {
+            createParticles();
+            updateCountdown();
+            addInteractivity();
+            addParallaxEffect();
+        });
+    </script>
+</body>
+
+</html>
